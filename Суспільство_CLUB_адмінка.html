@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Адмінка — Суспільство.CLUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16130F;--green:#294A3A;--green-deep:#1D3529;
+  --taupe:#BFA599;--beige:#DFD6CF;--paper:#E9E3DD;--surface:#F6F3F0;
+  --line:rgba(41,74,58,.16);--line-soft:rgba(41,74,58,.09);
+  --gold:#8A6A3E;--red:#A85C4C;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Onest","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-weight:300;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+header{background:var(--green);color:var(--beige);border-bottom:1px solid rgba(0,0,0,.2)}
+.bar{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:14px}
+.wordmark{font-size:11px;letter-spacing:.26em;text-transform:uppercase}
+.wordmark span{font-family:var(--serif);font-style:italic;font-size:19px;letter-spacing:.02em;text-transform:none;margin-left:9px}
+.lib{margin-left:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(223,214,207,.6);text-decoration:none;border-bottom:1px solid rgba(223,214,207,.25);padding-bottom:2px}
+.lib:hover{color:var(--beige)}
+
+.wrap{max-width:1100px;margin:0 auto;padding:30px 24px 90px}
+
+/* ── форма ── */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:26px 28px;margin-bottom:26px}
+.panel h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:27px;color:var(--green);margin-bottom:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1.4fr auto auto;gap:12px;align-items:end}
+.f label{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(22,19,15,.45);margin-bottom:7px}
+.f input,.f select{
+  width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
+  padding:8px 2px;font-size:15px;transition:border-color .2s;
+}
+.f input:focus,.f select:focus{border-color:var(--green);outline:none}
+.f input::placeholder{color:rgba(22,19,15,.28)}
+.btn{
+  background:var(--green);color:var(--beige);border-radius:100px;
+  padding:11px 24px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  white-space:nowrap;transition:background .2s;
+}
+.btn:hover{background:var(--green-deep)}
+.btn.ghost{background:none;color:var(--green);border:1px solid var(--line)}
+.btn.ghost:hover{background:rgba(41,74,58,.06)}
+.formerr{color:var(--red);font-size:13px;margin-top:14px;min-height:18px}
+
+/* ── стрічка керування ── */
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.search{
+  flex:1;min-width:220px;display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid var(--line);padding-bottom:8px;
+}
+.search input{flex:1;background:none;border:none;font-size:15px}
+.search svg{opacity:.4}
+.stat{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(22,19,15,.45)}
+.stat b{color:var(--green);font-weight:500}
+
+/* ── таблиця ── */
+table{width:100%;border-collapse:collapse}
+th{
+  text-align:left;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(22,19,15,.4);font-weight:500;padding:0 10px 10px;border-bottom:1px solid var(--line);
+}
+td{padding:14px 10px;border-bottom:1px solid var(--line-soft);vertical-align:middle;font-size:14.5px}
+tr:hover td{background:rgba(255,255,255,.55)}
+.nm{font-size:15px}
+.em{color:rgba(22,19,15,.55);font-size:13.5px;word-break:break-all}
+.pass{
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:14px;
+  background:rgba(41,74,58,.07);padding:5px 10px;border-radius:3px;letter-spacing:.02em;
+}
+.pill{
+  display:inline-block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  padding:4px 11px;border-radius:100px;border:1px solid var(--line);color:rgba(22,19,15,.55);
+  cursor:pointer;
+}
+.pill.pw{border-color:rgba(138,106,62,.4);background:rgba(138,106,62,.09);color:var(--gold)}
+.acts{display:flex;gap:6px;justify-content:flex-end}
+.ico{
+  width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  color:rgba(22,19,15,.42);transition:.18s;
+}
+.ico:hover{background:rgba(41,74,58,.09);color:var(--green)}
+.ico.del:hover{background:rgba(168,92,76,.12);color:var(--red)}
+.empty{padding:56px 10px;text-align:center;color:rgba(22,19,15,.42)}
+.empty p{font-family:var(--serif);font-style:italic;font-size:22px;color:rgba(22,19,15,.55);margin-bottom:6px}
+
+/* ── експорт ── */
+.export .row2{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+textarea{
+  width:100%;min-height:120px;background:var(--paper);border:1px solid var(--line);
+  border-radius:3px;padding:14px;font-family:ui-monospace,Menlo,monospace;
+  font-size:12.5px;line-height:1.6;resize:vertical;
+}
+.hint{font-size:13.5px;color:rgba(22,19,15,.58);line-height:1.65;margin-bottom:16px;max-width:74ch}
+.hint b{font-weight:500;color:var(--ink)}
+.warn{
+  border-left:2px solid var(--gold);background:rgba(138,106,62,.06);
+  padding:14px 18px;font-size:13.5px;line-height:1.6;color:rgba(22,19,15,.7);margin-bottom:22px;
+}
+
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,80px);
+  background:var(--green);color:var(--beige);padding:12px 26px;border-radius:100px;
+  font-size:13px;letter-spacing:.04em;opacity:0;transition:.28s;pointer-events:none;z-index:50;
+}
+.toast.on{transform:translate(-50%,0);opacity:1}
+
+@media(max-width:820px){
+  .grid{grid-template-columns:1fr 1fr;gap:14px}
+  .grid .f:nth-child(3){grid-column:1/-1}
+  .grid .btn{grid-column:1/-1}
+  thead{display:none}
+  tr{display:block;border-bottom:1px solid var(--line);padding:14px 0}
+  td{display:block;border:none;padding:3px 0}
+  .acts{justify-content:flex-start;margin-top:10px}
+  .wrap{padding:22px 18px 80px}
+  .panel{padding:20px 18px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="wordmark">Суспільство.CLUB <span>Адмінка</span></div>
+    <a class="lib" href="Суспільство_CLUB_бібліотека.html" target="_blank">Відкрити бібліотеку →</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="panel">
+    <h2>Додати учасницю</h2>
+    <div class="grid">
+      <div class="f"><label>Ім'я</label><input id="fn" placeholder="Марина" autocomplete="off"></div>
+      <div class="f"><label>Прізвище</label><input id="ls" placeholder="Іваненко" autocomplete="off"></div>
+      <div class="f"><label>Пошта</label><input id="em" type="email" placeholder="marina@mail.com" autocomplete="off"></div>
+      <div class="f"><label>Тариф</label>
+        <select id="tr"><option value="light">Light</option><option value="power">Power</option></select>
+      </div>
+      <button class="btn" id="add">Додати</button>
+    </div>
+    <p class="formerr" id="fe"></p>
+  </div>
+
+  <div class="panel">
+    <div class="tools">
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="Пошук за іменем або поштою…">
+      </div>
+      <span class="stat" id="stat"></span>
+    </div>
+    <table>
+      <thead><tr>
+        <th style="width:23%">Учасниця</th><th style="width:26%">Пошта</th>
+        <th style="width:12%">Тариф</th><th style="width:20%">Пароль</th><th></th>
+      </tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+
+  <div class="panel export">
+    <h2>Оновити бібліотеку</h2>
+    <p class="hint">Після кожної зміни списку відкрий файл <b>Суспільство_CLUB_бібліотека.html</b> у текстовому редакторі, знайди блок між рядками <b>СПИСОК УЧАСНИЦЬ — ПОЧАТОК</b> і <b>КІНЕЦЬ</b>, і заміни його на цей код.</p>
+    <div class="row2">
+      <button class="btn" id="cp">Скопіювати код</button>
+      <button class="btn ghost" id="dlBackup">Зберегти резервну копію</button>
+      <button class="btn ghost" id="upBackup">Відновити з копії</button>
+      <button class="btn ghost" id="dlCsv">Вивантажити CSV</button>
+      <input type="file" id="file" accept=".json" hidden>
+    </div>
+    <textarea id="out" readonly spellcheck="false"></textarea>
+  </div>
+
+  <div class="warn">
+    <b>Список зберігається у цьому браузері.</b> Якщо почистиш дані сайту або відкриєш адмінку на іншому комп'ютері — він буде порожній. Тому раз на місяць тисни «Зберегти резервну копію» — файл можна повернути кнопкою «Відновити з копії».
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const KEY = "suspilstvo_users_v1";
+const esc = s => (s||"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ── сховище (з запасним варіантом у пам'яті) ── */
+let mem = [];
+function load(){
+  try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : []; }
+  catch(e){ return mem; }
+}
+function save(){
+  mem = users;
+  try { localStorage.setItem(KEY, JSON.stringify(users)); } catch(e){}
+}
+let users = load();
+
+/* ── генератор паролів ── */
+const WORDS = ["sonce","kvitka","viter","ranok","more","zoria","lito","richka","holos","krylo",
+               "svitlo","step","gai","dzherelo","nebo","vesna","lystok","perlyna","bereh","dyvo",
+               "veselka","yalyna","koleso","teplo","yasen","myata","kalyna","rosa","obrii","shovk",
+               "zerno","prominj","tysha","vyshnya","medok","sokil","yablunya","zlato"];
+function genPass(){
+  let p;
+  do {
+    const w = WORDS[Math.floor(Math.random()*WORDS.length)].replace(/[^a-z]/g,"");
+    p = w + "-" + Math.floor(1000 + Math.random()*9000);
+  } while (users.some(u => u.p === p));
+  return p;
+}
+
+/* ── додавання ── */
+$("add").onclick = () => {
+  const n = $("fn").value.trim(), s = $("ls").value.trim(),
+        e = $("em").value.trim(), t = $("tr").value;
+  if (!n)                       return fail("Впиши ім'я.");
+  if (!e || !/^\S+@\S+\.\S+$/.test(e)) return fail("Пошта виглядає неправильно.");
+  if (users.some(u => u.e.toLowerCase() === e.toLowerCase()))
+    return fail("Учасниця з такою поштою вже є у списку.");
+  users.unshift({ n, s, e, t, p: genPass(), d: new Date().toISOString().slice(0,10) });
+  save(); draw();
+  $("fn").value = $("ls").value = $("em").value = ""; $("fe").textContent = ""; $("fn").focus();
+  toast("Додано. Пароль згенеровано.");
+};
+function fail(m){ $("fe").textContent = m; }
+["fn","ls","em"].forEach(id => $(id).addEventListener("keydown", e => {
+  $("fe").textContent = "";
+  if (e.key === "Enter") $("add").click();
+}));
+
+/* ── таблиця ── */
+let q = "";
+$("q").oninput = e => { q = e.target.value.trim().toLowerCase(); draw(); };
+
+function draw(){
+  const list = users.filter(u =>
+    !q || (u.n+" "+u.s+" "+u.e).toLowerCase().includes(q));
+
+  const nP = users.filter(u => u.t === "power").length;
+  $("stat").innerHTML = `Усього <b>${users.length}</b> · Power <b>${nP}</b> · Light <b>${users.length-nP}</b>`;
+
+  $("tb").innerHTML = list.length ? list.map(u => {
+    const i = users.indexOf(u);
+    return `<tr>
+      <td class="nm">${esc(u.n)} ${esc(u.s)}</td>
+      <td class="em">${esc(u.e)}</td>
+      <td><span class="pill ${u.t==='power'?'pw':''}" data-a="tier" data-i="${i}" title="Змінити тариф">${u.t==='power'?'Power':'Light'}</span></td>
+      <td><span class="pass">${esc(u.p)}</span></td>
+      <td><div class="acts">
+        <button class="ico" data-a="copy" data-i="${i}" title="Скопіювати текст запрошення">${ic.copy}</button>
+        <button class="ico" data-a="new"  data-i="${i}" title="Новий пароль">${ic.ref}</button>
+        <button class="ico del" data-a="del" data-i="${i}" title="Видалити">${ic.del}</button>
+      </div></td>
+    </tr>`;
+  }).join("")
+  : `<tr><td colspan="5"><div class="empty"><p>${users.length ? "Нічого не знайшлося" : "Список порожній"}</p>
+      <span>${users.length ? "Спробуй інше слово" : "Додай першу учасницю у формі вище"}</span></div></td></tr>`;
+
+  buildExport();
+}
+
+$("tb").onclick = e => {
+  const b = e.target.closest("[data-a]"); if (!b) return;
+  const u = users[+b.dataset.i], a = b.dataset.a;
+  if (a === "tier"){ u.t = u.t === "power" ? "light" : "power"; save(); draw(); toast(`${u.n} — тариф ${u.t === "power" ? "Power" : "Light"}`); }
+  if (a === "new") { u.p = genPass(); save(); draw(); toast("Новий пароль згенеровано"); }
+  if (a === "del") { if (confirm(`Видалити ${u.n} ${u.s}? Її пароль перестане працювати.`)){ users.splice(+b.dataset.i,1); save(); draw(); toast("Видалено"); } }
+  if (a === "copy"){
+    copy(`Привіт, ${u.n}!\n\nОсь твій доступ до бібліотеки Суспільство.CLUB.\nПароль: ${u.p}\nТариф: ${u.t === "power" ? "Power" : "Light"}\n\nПароль особистий — не передавай його, будь ласка.`);
+    toast("Текст запрошення скопійовано");
+  }
+};
+
+/* ── експорт ── */
+function buildExport(){
+  const body = users.length
+    ? users.map(u => `  {n:${J(u.n)}, s:${J(u.s)}, e:${J(u.e)}, t:${J(u.t)}, p:${J(u.p)}},`).join("\n")
+    : "";
+  $("out").value =
+`// ─────────── СПИСОК УЧАСНИЦЬ ─ ПОЧАТОК ───────────
+// Не редагуй вручну. Згенеруй в адмінці й встав сюди замість цього блоку.
+// Оновлено: ${new Date().toLocaleDateString("uk-UA")} · учасниць: ${users.length}
+const USERS = [
+${body}
+];
+// ─────────── СПИСОК УЧАСНИЦЬ ─ КІНЕЦЬ ───────────`;
+}
+const J = s => JSON.stringify(s || "");
+
+$("cp").onclick = () => { copy($("out").value); toast("Код скопійовано — встав його у файл бібліотеки"); };
+
+$("dlBackup").onclick = () => dl(JSON.stringify(users, null, 2), "application/json",
+  `учасниці-${new Date().toISOString().slice(0,10)}.json`);
+
+$("dlCsv").onclick = () => {
+  const rows = [["Ім'я","Прізвище","Пошта","Тариф","Пароль","Додано"],
+    ...users.map(u => [u.n,u.s,u.e,u.t==="power"?"Power":"Light",u.p,u.d||""])];
+  dl("\uFEFF" + rows.map(r => r.map(c => `"${(c||"").replace(/"/g,'""')}"`).join(",")).join("\n"),
+     "text/csv", `учасниці-${new Date().toISOString().slice(0,10)}.csv`);
+};
+
+$("upBackup").onclick = () => $("file").click();
+$("file").onchange = ev => {
+  const f = ev.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const arr = JSON.parse(r.result);
+      if (!Array.isArray(arr)) throw 0;
+      if (users.length && !confirm(`У списку зараз ${users.length}. Замінити на ${arr.length} з файлу?`)) return;
+      users = arr.filter(u => u && u.n && u.p);
+      save(); draw(); toast(`Відновлено: ${users.length}`);
+    } catch(e){ toast("Файл не читається — потрібен .json з резервної копії"); }
+  };
+  r.readAsText(f); ev.target.value = "";
+};
+
+function dl(txt, type, name){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([txt], {type}));
+  a.download = name; a.click(); URL.revokeObjectURL(a.href);
+  toast("Файл завантажено");
+}
+function copy(t){
+  if (navigator.clipboard) return navigator.clipboard.writeText(t).catch(() => fallback(t));
+  fallback(t);
+}
+function fallback(t){
+  const a = document.createElement("textarea");
+  a.value = t; document.body.appendChild(a); a.select();
+  document.execCommand("copy"); a.remove();
+}
+let tt;
+function toast(m){
+  $("toast").textContent = m; $("toast").classList.add("on");
+  clearTimeout(tt); tt = setTimeout(() => $("toast").classList.remove("on"), 2400);
+}
+
+const ic = {
+  copy:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>`,
+  ref :`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>`,
+  del :`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>`
+};
+
+draw(); $("fn").focus();
+</script>
+</body>
+</html>
