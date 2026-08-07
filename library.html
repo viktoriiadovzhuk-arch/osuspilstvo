@@ -301,12 +301,23 @@ footer{
     <p class="gate-eyebrow">Закритий доступ</p>
     <h1 class="gate-title">Бібліотека</h1>
     <p class="gate-note">Усі записи зустрічей, лекцій та практик клубу.<br>Введіть код доступу зі свого тарифу.</p>
-    <div class="gate-field">
-      <input id="code" type="password" placeholder="код доступу" autocomplete="off"
-             autocapitalize="off" spellcheck="false" aria-label="Код доступу">
-      <button id="enter">Увійти</button>
+    <div id="step1">
+      <div class="gate-field">
+        <input id="code" type="password" placeholder="код доступу" autocomplete="off"
+               autocapitalize="off" spellcheck="false" aria-label="Код доступу">
+        <button id="enter">Увійти</button>
+      </div>
+      <p class="gate-err" id="err">Такого коду немає. Перевірте розкладку.</p>
     </div>
-    <p class="gate-err" id="err">Такого коду немає. Перевірте розкладку.</p>
+    <div id="step2" hidden>
+      <p class="gate-note" style="margin-bottom:20px">Як до тебе звертатися?</p>
+      <div class="gate-field">
+        <input id="nm" type="text" placeholder="ім'я" autocomplete="given-name"
+               spellcheck="false" aria-label="Ім'я">
+        <button id="go">Далі</button>
+      </div>
+      <p class="gate-err show" style="color:rgba(223,214,207,.4);cursor:pointer" id="skip">Пропустити</p>
+    </div>
   </div>
 </div>
 
@@ -346,14 +357,83 @@ footer{
    НАЛАШТУВАННЯ — те, що можна міняти
    ═══════════════════════════════════════════════════ */
 
-// Запасні загальні коди — для твоєї перевірки.
+// Запасні загальні коди — для твоєї власної перевірки.
 // Щоб вимкнути, зроби значення порожніми: light:"" , power:""
 const CODES = { light: "svitlo2026", power: "power2026" };
 
-// ─────────── СПИСОК УЧАСНИЦЬ ─ ПОЧАТОК ───────────
-// Не редагуй вручну. Згенеруй в адмінці й встав сюди замість цього блоку.
-const USERS = [];
-// ─────────── СПИСОК УЧАСНИЦЬ ─ КІНЕЦЬ ───────────
+// ─────────── КОДИ ДОСТУПУ ───────────
+// 300 готових кодів. Видавай їх дівчатам через адмінку — файл чіпати не треба.
+// Щоб забрати доступ, впиши код у BLOCKED нижче і перезалий файл на хостинг.
+const POOL = {
+  light: [
+    "myata-3471", "prolisok-1791", "dzherelo-9779", "hilka-6991", "tysha-1950",
+    "sonce-4517", "dolonya-2408", "ranok-7851", "dzherelo-4943", "gai-7955",
+    "dyvo-3028", "lelia-2013", "teplo-7499", "dyvo-4622", "dolonya-3181",
+    "more-7867", "koleso-9858", "holos-6054", "svitlo-3961", "hilka-4078",
+    "obrii-2596", "svitlo-2028", "teplo-1976", "veselka-4374", "sokil-9711",
+    "ranok-6146", "rosa-8424", "obrii-5911", "lito-3945", "yalyna-4999",
+    "gai-5919", "step-9111", "namysto-8353", "more-2199", "holos-9387",
+    "promin-3702", "zhaivir-6604", "koleso-9011", "promin-1642", "vyshnya-2271",
+    "zhaivir-6140", "namysto-6737", "verba-9137", "tysha-8474", "dzherelo-2533",
+    "medok-8767", "yalyna-2064", "dyvo-6072", "viter-8301", "more-7320",
+    "vyshnya-6685", "bereh-8564", "nebo-3753", "veselka-2918", "sokil-1965",
+    "kvitka-5709", "kalyna-5056", "prolisok-7405", "sokil-2320", "kryhta-8359",
+    "prolisok-5552", "kalyna-8053", "svitlo-5561", "yasen-7804", "nebo-7233",
+    "lelia-3472", "gai-3887", "koleso-4800", "vyshnya-4822", "barvinok-8945",
+    "tysha-3987", "lystok-5619", "barvinok-3386", "promin-9758", "obrii-6220",
+    "kalyna-9445", "veselka-1884", "rosa-7428", "prolisok-7536", "prolisok-2696",
+    "shovk-7560", "dyvo-4122", "dzherelo-4420", "richka-3659", "holos-6571",
+    "verba-1861", "hilka-1003", "teplo-3478", "struna-2662", "obrii-1417",
+    "dzherelo-4407", "veselka-7164", "koleso-5132", "nebo-6966", "shovk-3012",
+    "holos-8996", "rosa-8870", "shovk-6109", "gai-3361", "hilka-6613",
+    "zerno-5337", "shovk-3645", "step-1378", "kvitka-9654", "obrii-3401",
+    "yalyna-9899", "bereh-9652", "mriya-2491", "yalyna-5278", "step-7008",
+    "kryhta-6827", "zlato-4650", "struna-9873", "zlato-9236", "namysto-4654",
+    "veselka-4197", "lito-7564", "zerno-4714", "kvit-9480", "sokil-6825",
+    "zatyshok-1474", "bereh-5577", "shovk-5246", "kvit-6640", "richka-6726",
+    "obrii-2319", "lelia-2673", "lelia-8701", "kvit-6533", "kvitka-8907",
+    "veselka-1031", "shovk-6636", "viter-2389", "vyshnya-2964", "perlyna-4265",
+    "shovk-3924", "ranok-6447", "gai-7485", "rosa-7576", "zerno-2391",
+    "zatyshok-3602", "kryhta-3081", "bereh-3476", "tysha-8624", "viter-3394",
+    "veselka-8771", "vyshnya-6741", "koleso-9989", "svitlo-3146", "bereh-1233",
+  ],
+  power: [
+    "zatyshok-2683", "step-3281", "ranok-4191", "kvitka-1458", "lystok-4486",
+    "more-9211", "lito-6341", "lystok-9918", "promin-3147", "dyvo-6796",
+    "rosa-9466", "promin-9219", "kalyna-9713", "koleso-9577", "sonce-1306",
+    "richka-4000", "verba-1064", "zlato-3454", "krylo-3319", "shovk-2971",
+    "svitlo-2011", "myata-9492", "step-8905", "zoria-2738", "svitlo-1930",
+    "lito-4134", "medok-1691", "zlato-2601", "sonce-8408", "svitlo-1456",
+    "zhaivir-2038", "richka-6334", "veselka-9282", "verba-9391", "kvit-5541",
+    "richka-9325", "struna-8832", "sonce-5057", "yalyna-9572", "lystok-4319",
+    "richka-3246", "promin-2992", "prolisok-8243", "myata-2188", "vyshnya-4942",
+    "ranok-2198", "kvitka-5960", "zoria-3004", "zlato-3530", "yasen-6999",
+    "koleso-5146", "kalyna-8663", "lelia-2542", "prolisok-8983", "kryhta-4665",
+    "kryhta-8070", "sonce-7616", "namysto-7902", "kvit-6842", "myata-2510",
+    "zatyshok-6995", "bereh-6537", "svitlo-8514", "richka-1296", "perlyna-6431",
+    "step-5840", "sonce-2053", "holos-4744", "hilka-2377", "lystok-5455",
+    "dolonya-3974", "medok-3122", "ranok-5237", "prolisok-3447", "struna-9434",
+    "teplo-9103", "yalyna-6358", "gai-5572", "dyvo-4003", "ranok-2186",
+    "medok-1275", "vesna-2451", "lystok-2372", "verba-4643", "dzherelo-5332",
+    "holos-8434", "barvinok-6556", "svitlo-7844", "medok-3117", "dolonya-9632",
+    "yasen-4906", "holos-3645", "lystok-1825", "krylo-4305", "mriya-5997",
+    "step-4372", "more-8302", "sonce-3914", "medok-6685", "bereh-5103",
+    "dolonya-1251", "bereh-9284", "svitlo-4104", "sonce-8778", "lito-8324",
+    "hilka-8080", "vyshnya-9110", "struna-7440", "sonce-6042", "yalyna-4525",
+    "lelia-6614", "kvit-3289", "prolisok-6694", "dyvo-3126", "barvinok-2158",
+    "vesna-5187", "ranok-3674", "dyvo-2384", "vyshnya-7240", "sonce-5619",
+    "verba-4968", "yalyna-5801", "dolonya-8527", "krylo-3581", "medok-8304",
+    "barvinok-5312", "obrii-6389", "svitlo-6300", "lito-1564", "mriya-4569",
+    "nebo-3997", "barvinok-6494", "perlyna-2374", "shovk-5569", "sonce-4292",
+    "lito-9269", "zlato-1081", "gai-5328", "gai-3357", "prolisok-1682",
+    "prolisok-1368", "mriya-5984", "vesna-4814", "gai-9670", "zhaivir-3543",
+    "vyshnya-7381", "zhaivir-6343", "zatyshok-9096", "koleso-5655", "zatyshok-3371",
+  ]
+};
+
+// Відкликані коди — перестають працювати. Список бери в адмінці.
+const BLOCKED = [];
+// ─────────── КІНЕЦЬ КОДІВ ───────────
 
 // Мастермайнди й розстановки — це рівень Power за форматом клубу,
 // тому вкладки "Розстановки" і "Мастермайнди" закриті для Light цілком.
@@ -377,15 +457,35 @@ const $ = id => document.getElementById(id);
 const esc = s => (s||"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* ── gate ── */
+const NKEY = "suspilstvo_name";
 function tryEnter(){
   const v = $("code").value.trim().toLowerCase();
   if (!v) return;
-  const u = USERS.find(x => (x.p||"").toLowerCase() === v);
-  if (u)                                              unlock(u.t === "power" ? "power" : "light", u.n);
-  else if (CODES.power && v === CODES.power.toLowerCase()) unlock("power", "");
-  else if (CODES.light && v === CODES.light.toLowerCase()) unlock("light", "");
-  else { $("err").classList.add("show"); $("code").value=""; $("code").focus(); }
+  if (BLOCKED.some(c => c.toLowerCase() === v)) return deny();
+  let t = null;
+  if      (POOL.power.some(c => c.toLowerCase() === v)) t = "power";
+  else if (POOL.light.some(c => c.toLowerCase() === v)) t = "light";
+  else if (CODES.power && v === CODES.power.toLowerCase()) t = "power";
+  else if (CODES.light && v === CODES.light.toLowerCase()) t = "light";
+  if (!t) return deny();
+
+  let name = "";
+  try { name = localStorage.getItem(NKEY + ":" + v) || ""; } catch(e){}
+  if (name) return unlock(t, name);
+  pending = { t, v };
+  $("step1").hidden = true; $("step2").hidden = false; $("nm").focus();
 }
+function deny(){ $("err").classList.add("show"); $("code").value=""; $("code").focus(); }
+
+let pending = null;
+function finishName(){
+  const n = $("nm").value.trim().replace(/\s+/g," ").split(" ")[0];
+  if (n) { try { localStorage.setItem(NKEY + ":" + pending.v, n); } catch(e){} }
+  unlock(pending.t, n);
+}
+$("go").onclick = finishName;
+$("skip").onclick = () => unlock(pending.t, "");
+$("nm").addEventListener("keydown", e => { if (e.key === "Enter") finishName(); });
 function unlock(t, name){
   tier = t; who = name || "";
   $("gate").classList.add("hidden");
